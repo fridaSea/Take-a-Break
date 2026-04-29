@@ -1,0 +1,27 @@
+.main-button {
+  background-color: #dd00ff;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: transparent;
+    border: 1px solid #434143;
+  }
+}
+
+.main-button--primary {
+  background-color: #00eaff;
+  color: black;
+}
+
+.main-button--secondary {
+  background-color: #3c3c3d;
+  color: white;
+
+  &:hover {
+    color: black;
+  }
+}
