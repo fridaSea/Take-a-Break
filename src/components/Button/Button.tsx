@@ -3,7 +3,7 @@ import "./Button.css";
 interface MainButtonProps {
   text: string;
   onClick: () => void;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "active";
 }
 
 function MainButton({ text, onClick, variant }: MainButtonProps) {

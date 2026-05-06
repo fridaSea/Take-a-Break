@@ -1,15 +1,15 @@
 .main-button {
-  background-color: #dd00ff;
+  background-color: transparent;
   color: black;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #5d5a5d;
+}
 
-  &:hover {
-    background-color: transparent;
-    border: 1px solid #434143;
-  }
+.main-button:hover {
+  background-color: rgba(6, 161, 50, 0.5);
 }
 
 .main-button--primary {
@@ -24,4 +24,8 @@
   &:hover {
     color: black;
   }
+}
+
+.main-button--active {
+  background-image: linear-gradient(to right, #4cb8c4 0%, #3cd3ad 100%);
 }
