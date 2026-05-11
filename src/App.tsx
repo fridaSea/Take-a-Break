@@ -9,12 +9,6 @@ function App() {
 
   // mehrere Buttons können aktiv sein
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
-  //const [checkbox, setCheckbox] = useState<boolean>(false);
-
-  const [checkboxBewerbung, setCheckboxBewerbung] = useState<boolean>(false);
-  const [checkboxProgrammieren, setCheckboxProgrammieren] =
-    useState<boolean>(false);
-  const [checkboxKreuzstich, setCheckboxKreuzstich] = useState<boolean>(false);
 
   function handleClick() {
     alert("You clicked me");
@@ -28,56 +22,6 @@ function App() {
       setSelectedEmotions([...selectedEmotions, emotion]);
     }
   }
-
-  // function handleCheckboxClick() {
-  //   const newValue = !checkbox;
-  //   setCheckbox(newValue);
-  //   localStorage.setItem("checkbox", newValue.toString());
-  // }
-
-  function handleCheckboxBewerbungClick() {
-    const newValue = !checkboxBewerbung;
-    setCheckboxBewerbung(newValue);
-    localStorage.setItem("checkboxBewerbung", newValue.toString());
-  }
-
-  function handleCheckboxProgrammierenClick() {
-    const newValue = !checkboxProgrammieren;
-    setCheckboxProgrammieren(newValue);
-    localStorage.setItem("checkboxProgrammieren", newValue.toString());
-  }
-
-  function handleCheckboxKreuzstichClick() {
-    const newValue = !checkboxKreuzstich;
-    setCheckboxKreuzstich(newValue);
-    localStorage.setItem("checkboxKreuzstich", newValue.toString());
-  }
-
-  function loadFromLocalStorage() {
-    const savedBewerbung = localStorage.getItem("checkboxBewerbung");
-    if (savedBewerbung !== null) {
-      //ungleich zu null
-      if (savedBewerbung === "true") {
-        setCheckboxBewerbung(true);
-      } else {
-        setCheckboxBewerbung(false);
-      }
-    }
-
-    const savedProgrammieren = localStorage.getItem("checkboxProgrammieren");
-    if (savedProgrammieren !== null) {
-      setCheckboxProgrammieren(savedProgrammieren === "true");
-    }
-
-    const savedKreuzstich = localStorage.getItem("checkboxKreuzstich");
-    if (savedKreuzstich !== null) {
-      setCheckboxKreuzstich(savedKreuzstich === "true");
-    }
-  }
-
-  useEffect(() => {
-    loadFromLocalStorage();
-  }, []);
 
   return (
     <>
@@ -119,25 +63,13 @@ function App() {
         <div className="habit-tracker">
           <h2>Deine Gewohnheiten</h2>
 
-          <HabitCheckbox
-            habitName="Bewerbung"
-            checked={checkboxBewerbung}
-            onChange={handleCheckboxBewerbungClick}
-          />
-
-          <HabitCheckbox
-            habitName="Programmieren"
-            checked={checkboxProgrammieren}
-            onChange={handleCheckboxProgrammierenClick}
-          />
-
-          <HabitCheckbox
-            habitName="Kreuzstich"
-            checked={checkboxKreuzstich}
-            onChange={handleCheckboxKreuzstichClick}
-          />
+          <HabitCheckbox habitName="Bewerbung" />
+          <HabitCheckbox habitName="Programmieren" />
+          <HabitCheckbox habitName="Kreuzstich" />
         </div>
       </section>
+
+      {/* // WELCHE VERSION MÖCHTEST DU HEUTE VERKÖRPERN? */}
 
       <div className="ticks"></div>
 

@@ -1,22 +1,48 @@
+import { useEffect, useState } from "react";
 import "./HabitCheckbox.css";
 
 interface HabitCheckboxProps {
   habitName: string;
-  checked: boolean;
-  onChange: () => void;
 }
+function HabitCheckbox({ habitName }: HabitCheckboxProps) {
+  const [checkbox, setCheckbox] = useState<boolean>(false);
 
-function HabitCheckbox({ habitName, checked, onChange }: HabitCheckboxProps) {
+  function handleCheckboxClick() {
+    const newValue = !checkbox;
+    setCheckbox(newValue);
+    localStorage.setItem(habitName, newValue.toString());
+  }
+
+  function loadFromLocalStorage() {
+    const savedHabit = localStorage.getItem(habitName);
+    if (savedHabit !== null) {
+      //ungleich zu null
+      if (savedHabit === "true") {
+        setCheckbox(true);
+      } else {
+        setCheckbox(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
+
   return (
-    <div className="habit-item">
-      <span className="habit-name">{habitName}</span>
-      <input
-        type="checkbox"
-        checked={checked}
-        className="habit-checkbox"
-        // onChange={handleCheckboxClick}
-        onChange={onChange}
-      />
+    // NEXT NEUE GEWOHNHEIT HINZUFÜGEN
+    // NEXT ICON FÜR GEWOHNHEIT AUSWÄHLEN
+    // NEXT VERLSUF ANZEIGEN
+    <div>
+      <div className="habit-item">
+        <span className="habit-name">{habitName}</span>
+        <input
+          type="checkbox"
+          checked={checkbox}
+          className="habit-checkbox"
+          onChange={handleCheckboxClick}
+        />
+      </div>
     </div>
   );
 }
