@@ -1,6 +1,7 @@
-import { useEffect, useEffectEvent, useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import MainButton from "./components/Button/Button";
+import HabitCheckbox from "./components/HabitCheckbox/HabitCheckbox";
 
 function App() {
   // nur 1 Button kann aktiv sein
@@ -9,6 +10,7 @@ function App() {
   // mehrere Buttons können aktiv sein
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
   //const [checkbox, setCheckbox] = useState<boolean>(false);
+
   const [checkboxBewerbung, setCheckboxBewerbung] = useState<boolean>(false);
   const [checkboxProgrammieren, setCheckboxProgrammieren] =
     useState<boolean>(false);
@@ -117,37 +119,23 @@ function App() {
         <div className="habit-tracker">
           <h2>Deine Gewohnheiten</h2>
 
-          <div className="habit-item">
-            <span className="habit-name">Bewerbung</span>
-            <input
-              type="checkbox"
-              checked={checkboxBewerbung}
-              className="habit-checkbox"
-              // onChange={handleCheckboxClick}
-              onChange={handleCheckboxBewerbungClick}
-            />
-          </div>
+          <HabitCheckbox
+            habitName="Bewerbung"
+            checked={checkboxBewerbung}
+            onChange={handleCheckboxBewerbungClick}
+          />
 
-          <div className="habit-item">
-            <span className="habit-name">Programmieren</span>
-            <input
-              type="checkbox"
-              className="habit-checkbox"
-              checked={checkboxProgrammieren}
-              // onChange={handleCheckboxClick}
-              onChange={handleCheckboxProgrammierenClick}
-            />
-          </div>
-          <div className="habit-item">
-            <span className="habit-name">Kreuzstich</span>
-            <input
-              type="checkbox"
-              className="habit-checkbox"
-              checked={checkboxKreuzstich}
-              // onChange={handleCheckboxClick}
-              onChange={handleCheckboxKreuzstichClick}
-            />
-          </div>
+          <HabitCheckbox
+            habitName="Programmieren"
+            checked={checkboxProgrammieren}
+            onChange={handleCheckboxProgrammierenClick}
+          />
+
+          <HabitCheckbox
+            habitName="Kreuzstich"
+            checked={checkboxKreuzstich}
+            onChange={handleCheckboxKreuzstichClick}
+          />
         </div>
       </section>
 

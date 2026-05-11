@@ -1,0 +1,14 @@
+.habit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.habit-checkbox {
+  accent-color: #3cd3ad;
+  width: 1.5em;
+  height: 1.5rem;
+  border-radius: 0.5rem;
+}
