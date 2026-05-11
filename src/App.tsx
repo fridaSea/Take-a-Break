@@ -1,66 +1,171 @@
-import { useState } from "react";
-// import reactLogo from "./assets/react.svg";
-// import viteLogo from "./assets/vite.svg";
-// import heroImg from "./assets/hero.png";
+import { useEffect, useEffectEvent, useState } from "react";
 import "./App.css";
+import MainButton from "./components/Button/Button";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // nur 1 Button kann aktiv sein
+  //const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+
+  // mehrere Buttons können aktiv sein
+  const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
+  //const [checkbox, setCheckbox] = useState<boolean>(false);
+  const [checkboxBewerbung, setCheckboxBewerbung] = useState<boolean>(false);
+  const [checkboxProgrammieren, setCheckboxProgrammieren] =
+    useState<boolean>(false);
+  const [checkboxKreuzstich, setCheckboxKreuzstich] = useState<boolean>(false);
+
+  function handleClick() {
+    alert("You clicked me");
+  }
+
+  function handleEmotionClick(emotion: string) {
+    if (selectedEmotions.includes(emotion)) {
+      setSelectedEmotions(selectedEmotions.filter((e) => e !== emotion));
+    } else {
+      // Wenn nicht im Array: hinzufügen
+      setSelectedEmotions([...selectedEmotions, emotion]);
+    }
+  }
+
+  // function handleCheckboxClick() {
+  //   const newValue = !checkbox;
+  //   setCheckbox(newValue);
+  //   localStorage.setItem("checkbox", newValue.toString());
+  // }
+
+  function handleCheckboxBewerbungClick() {
+    const newValue = !checkboxBewerbung;
+    setCheckboxBewerbung(newValue);
+    localStorage.setItem("checkboxBewerbung", newValue.toString());
+  }
+
+  function handleCheckboxProgrammierenClick() {
+    const newValue = !checkboxProgrammieren;
+    setCheckboxProgrammieren(newValue);
+    localStorage.setItem("checkboxProgrammieren", newValue.toString());
+  }
+
+  function handleCheckboxKreuzstichClick() {
+    const newValue = !checkboxKreuzstich;
+    setCheckboxKreuzstich(newValue);
+    localStorage.setItem("checkboxKreuzstich", newValue.toString());
+  }
+
+  function loadFromLocalStorage() {
+    const savedBewerbung = localStorage.getItem("checkboxBewerbung");
+    if (savedBewerbung !== null) {
+      //ungleich zu null
+      if (savedBewerbung === "true") {
+        setCheckboxBewerbung(true);
+      } else {
+        setCheckboxBewerbung(false);
+      }
+    }
+
+    const savedProgrammieren = localStorage.getItem("checkboxProgrammieren");
+    if (savedProgrammieren !== null) {
+      setCheckboxProgrammieren(savedProgrammieren === "true");
+    }
+
+    const savedKreuzstich = localStorage.getItem("checkboxKreuzstich");
+    if (savedKreuzstich !== null) {
+      setCheckboxKreuzstich(savedKreuzstich === "true");
+    }
+  }
+
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
 
   return (
     <>
       <section id="center">
-        <div className="hero">
-          {/* <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" /> */}
+        <div id="center">
+          <h1>Wie fühlst du dich heute?</h1>
+          <div className="emotion-buttons">
+            <MainButton
+              text="dankbar"
+              onClick={() => handleEmotionClick("dankbar")}
+              variant={
+                selectedEmotions.includes("dankbar") ? "active" : undefined
+              }
+            />
+            <MainButton
+              text="traurig"
+              onClick={() => handleEmotionClick("traurig")}
+              variant={
+                selectedEmotions.includes("traurig") ? "active" : undefined
+              }
+            />
+            <MainButton
+              text="gestressed"
+              onClick={() => handleEmotionClick("gestressed")}
+              variant={
+                selectedEmotions.includes("gestressed") ? "active" : undefined
+              }
+            />
+            <MainButton
+              text="glücklich"
+              onClick={() => handleEmotionClick("glücklich")}
+              variant={
+                selectedEmotions.includes("glücklich") ? "active" : undefined
+              }
+            />
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+
+        <div className="habit-tracker">
+          <h2>Deine Gewohnheiten</h2>
+
+          <div className="habit-item">
+            <span className="habit-name">Bewerbung</span>
+            <input
+              type="checkbox"
+              checked={checkboxBewerbung}
+              className="habit-checkbox"
+              // onChange={handleCheckboxClick}
+              onChange={handleCheckboxBewerbungClick}
+            />
+          </div>
+
+          <div className="habit-item">
+            <span className="habit-name">Programmieren</span>
+            <input
+              type="checkbox"
+              className="habit-checkbox"
+              checked={checkboxProgrammieren}
+              // onChange={handleCheckboxClick}
+              onChange={handleCheckboxProgrammierenClick}
+            />
+          </div>
+          <div className="habit-item">
+            <span className="habit-name">Kreuzstich</span>
+            <input
+              type="checkbox"
+              className="habit-checkbox"
+              checked={checkboxKreuzstich}
+              // onChange={handleCheckboxClick}
+              onChange={handleCheckboxKreuzstichClick}
+            />
+          </div>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
       </section>
 
       <div className="ticks"></div>
 
       <section id="next-steps">
-        <div id="docs">
-          {/* <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg> */}
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              {/* <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a> */}
-            </li>
-            <li>
-              {/* <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a> */}
-            </li>
-          </ul>
-        </div>
+        <MainButton
+          text="Click me again"
+          onClick={handleClick}
+          variant="secondary"
+        />
         <div id="social">
           {/* <svg className="icon" role="presentation" aria-hidden="true">
             <use href="/icons.svg#social-icon"></use>
           </svg> */}
           <h2>Connect with us</h2>
           <p>Join the Vite community</p>
-          <ul>
+          {/* <ul>
             <li>
               <a href="https://github.com/vitejs/vite" target="_blank">
                 <svg
@@ -85,36 +190,9 @@ function App() {
                 Discord
               </a>
             </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+          </ul> */}
         </div>
       </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
     </>
   );
 }
