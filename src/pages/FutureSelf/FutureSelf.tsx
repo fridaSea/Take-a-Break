@@ -1,47 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import "./FutureSelf.css";
+
+interface FutureSelf {
+  id: number;
+  personalityText: string;
+}
 
 function FutureSelf() {
   //   const [personalityText, setPersonalityText] = useState("");
 
-  const [personalityTextArray, setPersonalityTextArray] = useState([]);
+  const [personalityTextArray, setPersonalityTextArray] = useState(() => {
+    // debugger;
+    const savedPersonality = localStorage.getItem("personalityText");
+    return savedPersonality ? JSON.parse(savedPersonality) : [];
+  });
+
   const [inputValue, setInputValue] = useState("");
 
-  const addPersonalityText = () => {
+  const addPersonalityText = (event) => {
+    event.preventDefault();
+
     if (inputValue.trim() !== "") {
-      setPersonalityTextArray([...personalityTextArray, inputValue]);
+      const update = [...personalityTextArray, inputValue];
+      setPersonalityTextArray(update);
+      localStorage.setItem("personalityText", JSON.stringify(update));
       setInputValue("");
     }
   };
 
-  const handlepersonalityTextSubmit = (e) => {
-    e.preventDefault();
-    addPersonalityText();
-  };
-
-  //   const handlePersonalityTextChange = (event) => {
-  //     setPersonalityText(event.target.value);
-  //     // console.log("personalityText", personalityText);
-  //   };
-
-  //   const handlePersonalityTextSubmit = (event) => {
-  //     event.preventDefault();
-  //     console.log("personalityText", personalityText);
-  //   };
-
-  // ANDERER VERSUCH
-  // function handlePersonalitySubmit(e) {
-  //   // Prevent the browser from reloading the page
-  //   e.preventDefault();
-
-  //   console.log("e.target", e);
-  //   // const formData = new FormData(form);
-  // }
-
-  //   function handleCheckboxClick() {
-  //   const newValue = !checkbox; // "Nimm den aktuellen Status der Checkbox (checkbox) und kehre ihn um (!). Speichere das Ergebnis in newValue."
-  //   setCheckbox(newValue);
-  //   localStorage.setItem(habitName, newValue.toString());
-  // }
+  // RESET  - localStorage.clear();
 
   return (
     <>
@@ -50,37 +37,32 @@ function FutureSelf() {
 
         <div className="personality">
           <h2>Step into your future self</h2>
-          <form
-            // onSubmit={handlePersonalitySubmit}
-            onSubmit={handlepersonalityTextSubmit}
-          >
+          <form>
             <label htmlFor="personalityVersion">
               In welcher Version möchtest du heute durch deinen Tag gehen?
               <textarea
                 id="personalityVersion"
                 name="personalityVersion"
                 value={inputValue}
-                // value={personalityText}
                 onChange={(e) => setInputValue(e.target.value)}
-                // onChange={handlePersonalityTextChange}
                 rows={5}
                 cols={50}
                 placeholder="Heute gehe ich mit Leichtigkeit durch meinen Tag ..."
               ></textarea>
             </label>
 
-            <button
-              type="submit"
-              //   onClick={addPersonalityText}
-              // onClick={handlePersonalityTextSubmit}
-            >
+            <button type="submit" onClick={addPersonalityText}>
               Aktivate todays Personality
             </button>
             {/* <button type="reset">Change Personality</button> */}
           </form>
 
-          {/* <p>{personalityText}</p> */}
           <div>
+            <p>{personalityTextArray.toReversed()[0]}</p>
+          </div>
+
+          <div>
+            <h2>All deine bisherigen Versionen</h2>
             {personalityTextArray.map((personalityText, index) => (
               <p key={index}>{personalityText}</p>
             ))}
