@@ -29,3 +29,24 @@
 .main-button--active {
   background-image: linear-gradient(to right, #4cb8c4 0%, #3cd3ad 100%);
 }
+
+.main-button--navbar {
+  background-color: white;
+  color: black;
+  border: none;
+
+  &:hover {
+    color: black;
+    background-color: #f0f0f0;
+  }
+
+  &:active,
+  &.active {
+    background: #ffdbef;
+    background: linear-gradient(
+      357deg,
+      rgba(255, 219, 239, 1) 1%,
+      rgba(181, 216, 255, 1) 100%
+    );
+  }
+}
