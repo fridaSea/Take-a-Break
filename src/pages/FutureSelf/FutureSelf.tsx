@@ -45,6 +45,20 @@ function FutureSelf() {
 
   // RESET  - localStorage.clear();
 
+  const deletePersonalty = (event: React.MouseEvent, index: number) => {
+    event.preventDefault();
+
+    personalityTextArray.splice(index, 1);
+    setPersonalityTextArray([...personalityTextArray]);
+    localStorage.setItem(
+      "personalityText",
+      JSON.stringify(personalityTextArray),
+    );
+
+    // localStorage.clear();
+    // -> Löscht ALLE gespeicherten personalitys
+  };
+
   return (
     <>
       <div className="future-self-container">
@@ -99,6 +113,15 @@ function FutureSelf() {
               <div className="personality-card" key={personality.id}>
                 <h3>{personality.title}</h3>
                 <p>{personality.personalityText}</p>
+                {/* <button type="reset" onClick={deletePersonalty}>
+                  Change Personality
+                </button> */}
+                <MainButton
+                  text="Delete"
+                  variant={"secondary"}
+                  type="reset"
+                  onClick={deletePersonalty}
+                />
               </div>
             ))}
           </div>
