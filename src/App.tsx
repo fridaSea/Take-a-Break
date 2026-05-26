@@ -3,13 +3,15 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import FutureSelf from "./pages/FutureSelf/FutureSelf";
+import Footer from "./components/Footer/Footer";
+import Contact from "./pages/Contact/Contact";
 
 const Root = () => {
   return (
     <>
       <Navbar />
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
@@ -27,6 +29,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/futureSelf" element={<FutureSelf />} />
+            <Route path="/contact" element={<Contact />} />
             {/* <Route path="/registration" element={<Registration />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/sunsets" element={<Sunsets />} />
