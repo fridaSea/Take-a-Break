@@ -7,7 +7,7 @@ interface FutureSelf {
   id: number;
   title: string;
   personalityText: string;
-  // createdAt: Date;
+  createdAt: string;
   // mood: string;
 }
 
@@ -20,6 +20,7 @@ function FutureSelf() {
     // debugger;
 
     const savedPersonality = localStorage.getItem("personalityText");
+    console.log("savedPersonality", savedPersonality);
     return savedPersonality ? JSON.parse(savedPersonality) : [];
   });
 
@@ -34,6 +35,7 @@ function FutureSelf() {
         id: Date.now(),
         title: title,
         personalityText: inputValue,
+        createdAt: new Date().toISOString(),
       };
       const update = [...personalityTextArray, newPersonality];
       setPersonalityTextArray(update);
@@ -43,32 +45,40 @@ function FutureSelf() {
     }
   };
 
-  // RESET  - localStorage.clear();
+  // const deletePersonalty = (event: React.MouseEvent, index: number) => {
+  //   event.preventDefault();
 
-  const deletePersonalty = (event: React.MouseEvent, index: number) => {
-    event.preventDefault();
+  //   personalityTextArray.splice(index, 1);
+  //   setPersonalityTextArray([...personalityTextArray]);
+  //   localStorage.setItem(
+  //     "personalityText",
+  //     JSON.stringify(personalityTextArray),
+  //   );
 
-    personalityTextArray.splice(index, 1);
-    setPersonalityTextArray([...personalityTextArray]);
-    localStorage.setItem(
-      "personalityText",
-      JSON.stringify(personalityTextArray),
-    );
+  //   // localStorage.clear();
+  //   // -> Löscht ALLE gespeicherten personalitys
+  // };
 
-    // localStorage.clear();
-    // -> Löscht ALLE gespeicherten personalitys
+  const deletePersonalty = (index: number) => {
+    const updated = personalityTextArray.filter((_, i) => i !== index);
+
+    setPersonalityTextArray(updated);
+
+    localStorage.setItem("personalityText", JSON.stringify(updated));
   };
 
   return (
     <>
       <div className="future-self-container">
-        <h2>Your Future Self</h2>
+        <h2>Step into your future self</h2>
 
         <div className="personality">
-          <h2>Step into your future self</h2>
           <form className="personality-form">
+            <h3>
+              In welcher Version möchtest du heute durch deinen Tag gehen?
+            </h3>
             <p>
-              <label htmlFor="title">Title:</label>
+              <label htmlFor="title">{/* Title: */}</label>
               <input
                 name="title"
                 value={title}
@@ -77,7 +87,6 @@ function FutureSelf() {
               ></input>
             </p>
             <label htmlFor="personalityVersion">
-              In welcher Version möchtest du heute durch deinen Tag gehen?
               <textarea
                 id="personalityVersion"
                 name="personalityVersion"
@@ -109,18 +118,24 @@ function FutureSelf() {
             {/* {personalityTextArray.map((personalityText, index) => (
               <p key={index}>{personalityText}</p>
             ))} */}
-            {personalityTextArray.map((personality) => (
+            {personalityTextArray.map((personality, index) => (
               <div className="personality-card" key={personality.id}>
                 <h3>{personality.title}</h3>
                 <p>{personality.personalityText}</p>
+                {/* <p>{personality.createdAt}</p> */}
+                {/* <p>{new Date(personality.createdAt).toLocaleString("de-DE")}</p> -> WITH TIME */}
+                <p>
+                  {new Date(personality.createdAt).toLocaleDateString("de-DE")}
+                </p>
                 {/* <button type="reset" onClick={deletePersonalty}>
                   Change Personality
                 </button> */}
                 <MainButton
                   text="Delete"
                   variant={"secondary"}
-                  type="reset"
-                  onClick={deletePersonalty}
+                  // type="button"
+                  // onClick={deletePersonalty}
+                  onClick={() => deletePersonalty(index)}
                 />
               </div>
             ))}
@@ -128,8 +143,6 @@ function FutureSelf() {
         </div>
 
         <AnimatedButton text="click" onClick={() => {}}></AnimatedButton>
-
-        {/* NEXT: Objeckt im Array */}
       </div>
     </>
   );

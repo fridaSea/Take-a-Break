@@ -2,7 +2,8 @@ import "./Button.css";
 
 interface MainButtonProps {
   text: string;
-  onClick: () => void;
+  // onClick: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   variant?: "primary" | "secondary" | "active" | "navbar";
   active?: boolean;
 }
