@@ -71,6 +71,27 @@ function FutureSelf() {
     <>
       <div className="future-self-container">
         <h2>Step into your future self</h2>
+        <div className="personality-card-single">
+          <div className="personality-card-single-border">
+            {personalityTextArray.length === 0
+              ? // (
+                //   <>
+                //     Ich gehe mit Leichtigkeit durch meinen Tag und wähle Freude. Ich
+                //     lebe im Hier und Jetzt. Ich erkenne meine wahre Größe. Meine Welt
+                //     entsteht aus der Kraft meiner Entscheidungen.
+                //   </>
+                // )
+                `Ich gehe mit Leichtigkeit durch meinen Tag und wähle Freude.
+
+              Ich lebe im Hier und Jetzt.
+
+              Ich erkenne meine wahre Größe.
+
+              Meine Welt entsteht aus der Kraft meiner Entscheidungen.`
+              : personalityTextArray.toReversed()[0]?.personalityText}
+            {/* <p>{personalityTextArray.toReversed()[0]?.personalityText}</p> */}
+          </div>
+        </div>
 
         <div className="personality">
           <form className="personality-form">
@@ -109,24 +130,26 @@ function FutureSelf() {
             </button> */}
           </form>
 
-          <div>
-            <p>{personalityTextArray.toReversed()[0]?.personalityText}</p>
-          </div>
-
           <div className="personality-list">
-            <h2>All deine bisherigen Versionen</h2>
+            <h2>Deine bisherigen Versionen</h2>
             {/* {personalityTextArray.map((personalityText, index) => (
               <p key={index}>{personalityText}</p>
             ))} */}
             {personalityTextArray.map((personality, index) => (
               <div className="personality-card" key={personality.id}>
-                <h3>{personality.title}</h3>
+                <div className="personality-card-header">
+                  <h3>{personality.title}</h3>
+                  <p>
+                    {new Date(personality.createdAt).toLocaleDateString(
+                      "de-DE",
+                    )}
+                  </p>
+                </div>
+
                 <p>{personality.personalityText}</p>
                 {/* <p>{personality.createdAt}</p> */}
                 {/* <p>{new Date(personality.createdAt).toLocaleString("de-DE")}</p> -> WITH TIME */}
-                <p>
-                  {new Date(personality.createdAt).toLocaleDateString("de-DE")}
-                </p>
+
                 {/* <button type="reset" onClick={deletePersonalty}>
                   Change Personality
                 </button> */}

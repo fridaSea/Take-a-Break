@@ -1,8 +1,6 @@
 .future-self-container {
   display: flex;
   flex-direction: column;
-
-  /* justify-content: center; */
   align-items: center;
   gap: 25px;
   padding: 40px 20px;
@@ -45,7 +43,7 @@
 
 input,
 textarea {
-  width: 100%;
+  /* width: 100%; */
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #d8dbe2;
@@ -61,21 +59,63 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
 }
 
+input {
+  width: 130%;
+}
+
 .personality-list {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 16px;
 }
 
 .personality-card {
-  /* background: #f8f9fc; */
   background-color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 16px;
   border: 1px solid #e5e7eb;
+  width: 95%;
 }
 
 .personality-card h3 {
   margin-bottom: 10px;
   color: rgba(11, 87, 174, 0.537);
+}
+
+.personality-card-header {
+  display: grid;
+  grid-template-columns: 75% 25%;
+
+  h3 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+  }
+}
+
+.personality-card-single {
+  font-weight: bold;
+  background-color: rgb(255, 255, 255);
+  padding: 7.5px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  width: 95%;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 20px;
+  /* color: rgba(181, 216, 255, 1); */
+  white-space: pre-line;
+}
+
+.personality-card-single-border {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 40px;
 }
