@@ -7,8 +7,19 @@ interface HabitCheckboxProps {
 function HabitCheckbox({ habitName }: HabitCheckboxProps) {
   const [checkbox, setCheckbox] = useState<boolean>(false);
 
+  const [habitArray, setHabitArray] = useState(() => {
+    const savedHabit = localStorage.getItem(habitName);
+    return savedHabit ? JSON.parse(savedHabit) : [];
+  });
+
+  //   console.log("habitArray", habitArray);
+
+  useEffect(() => {
+    localStorage.setItem("habitName", JSON.stringify(habitArray));
+  }, [habitArray]);
+
   function handleCheckboxClick() {
-    const newValue = !checkbox;
+    const newValue = !checkbox; // "Nimm den aktuellen Status der Checkbox (checkbox) und kehre ihn um (!). Speichere das Ergebnis in newValue."
     setCheckbox(newValue);
     localStorage.setItem(habitName, newValue.toString());
   }
@@ -25,6 +36,10 @@ function HabitCheckbox({ habitName }: HabitCheckboxProps) {
     }
   }
 
+  // const addHabit = (newHabit) => {
+  //   setHabitArray((prevArray) => [...prevArray, newHabit]);
+  // };
+
   useEffect(() => {
     loadFromLocalStorage();
   }, []);
@@ -33,7 +48,7 @@ function HabitCheckbox({ habitName }: HabitCheckboxProps) {
     // NEXT NEUE GEWOHNHEIT HINZUFÜGEN
     // NEXT ICON FÜR GEWOHNHEIT AUSWÄHLEN
     // NEXT VERLSUF ANZEIGEN
-    <div>
+    <div className="habit-container">
       <div className="habit-item">
         <span className="habit-name">{habitName}</span>
         <input
