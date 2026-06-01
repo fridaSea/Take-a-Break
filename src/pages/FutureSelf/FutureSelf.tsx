@@ -3,7 +3,7 @@ import "./FutureSelf.css";
 import AnimatedButton from "../../components/AnimatedButton/AnimatedButton";
 import MainButton from "../../components/Button/Button";
 
-interface FutureSelf {
+interface Personality {
   id: number;
   title: string;
   personalityText: string;
@@ -12,15 +12,15 @@ interface FutureSelf {
 }
 
 function FutureSelf() {
-  //   const [personalityText, setPersonalityText] = useState("");
+  const [selectedPersonality, setSelectedPersonality] =
+    useState<Personality | null>(null);
 
   const [personalityTextArray, setPersonalityTextArray] = useState<
-    FutureSelf[]
+    Personality[]
   >(() => {
-    // debugger;
-
     const savedPersonality = localStorage.getItem("personalityText");
     console.log("savedPersonality", savedPersonality);
+
     return savedPersonality ? JSON.parse(savedPersonality) : [];
   });
 
@@ -31,7 +31,7 @@ function FutureSelf() {
     event.preventDefault();
 
     if (inputValue.trim() !== "" && title.trim() !== "") {
-      const newPersonality: FutureSelf = {
+      const newPersonality: Personality = {
         id: Date.now(),
         title: title,
         personalityText: inputValue,
@@ -40,26 +40,15 @@ function FutureSelf() {
       const update = [...personalityTextArray, newPersonality];
       setPersonalityTextArray(update);
       localStorage.setItem("personalityText", JSON.stringify(update));
+      setSelectedPersonality(newPersonality);
+
       setInputValue("");
       setTitle("");
     }
   };
 
-  // const deletePersonalty = (event: React.MouseEvent, index: number) => {
-  //   event.preventDefault();
-
-  //   personalityTextArray.splice(index, 1);
-  //   setPersonalityTextArray([...personalityTextArray]);
-  //   localStorage.setItem(
-  //     "personalityText",
-  //     JSON.stringify(personalityTextArray),
-  //   );
-
-  //   // localStorage.clear();
-  //   // -> Löscht ALLE gespeicherten personalitys
-  // };
-
-  const deletePersonalty = (index: number) => {
+  const deletePersonality = (index: number) => {
+    // TODO: Add case, if personality is displayed and then deleted -> what happens then.
     const updated = personalityTextArray.filter((_, i) => i !== index);
 
     setPersonalityTextArray(updated);
@@ -67,29 +56,60 @@ function FutureSelf() {
     localStorage.setItem("personalityText", JSON.stringify(updated));
   };
 
+  const setChosenPersonality = (personality: Personality) => {
+    localStorage.setItem("chosenPersonality", personality.id.toString());
+
+    setSelectedPersonality(personality);
+  };
+
+  const getChosenPersonality = () => {
+    const chosenPersonalityId = localStorage.getItem("chosenPersonality");
+
+    if (chosenPersonalityId) {
+      const selectedPersonality = personalityTextArray.find(
+        (personality) => personality.id === parseInt(chosenPersonalityId, 10),
+      );
+      return selectedPersonality;
+    }
+    return null;
+  };
+
+  const defaultText = `Ich gehe mit Leichtigkeit durch meinen Tag und wähle Freude.
+
+              Ich lebe im Hier und Jetzt.
+
+              Ich erkenne meine wahre Größe.
+
+              Meine Welt entsteht aus der Kraft meiner Entscheidungen.`;
+
+  const localStoragePersonality = getChosenPersonality();
+
+  // const displayedPersonality =
+  //   selectedPersonality ??
+  //   personalityTextArray[personalityTextArray.length - 1];
+  // ?? -> gibt Fallback Wert. Dient dazu, einen Standardwert zuzuweisen, wenn eine Variable null oder undefined ist.
+
+  let displayedPersonality;
+  if (personalityTextArray.length === 0) {
+    displayedPersonality = null;
+  } else if (selectedPersonality) {
+    displayedPersonality = selectedPersonality;
+  } else if (localStoragePersonality) {
+    displayedPersonality = localStoragePersonality;
+  } else {
+    displayedPersonality =
+      personalityTextArray[personalityTextArray.length - 1];
+  }
+
   return (
     <>
       <div className="future-self-container">
         <h2>Step into your future self</h2>
         <div className="personality-card-single">
           <div className="personality-card-single-border">
-            {personalityTextArray.length === 0
-              ? // (
-                //   <>
-                //     Ich gehe mit Leichtigkeit durch meinen Tag und wähle Freude. Ich
-                //     lebe im Hier und Jetzt. Ich erkenne meine wahre Größe. Meine Welt
-                //     entsteht aus der Kraft meiner Entscheidungen.
-                //   </>
-                // )
-                `Ich gehe mit Leichtigkeit durch meinen Tag und wähle Freude.
-
-              Ich lebe im Hier und Jetzt.
-
-              Ich erkenne meine wahre Größe.
-
-              Meine Welt entsteht aus der Kraft meiner Entscheidungen.`
-              : personalityTextArray.toReversed()[0]?.personalityText}
-            {/* <p>{personalityTextArray.toReversed()[0]?.personalityText}</p> */}
+            {displayedPersonality !== null
+              ? displayedPersonality.personalityText
+              : defaultText}
           </div>
         </div>
 
@@ -98,15 +118,15 @@ function FutureSelf() {
             <h3>
               In welcher Version möchtest du heute durch deinen Tag gehen?
             </h3>
-            <p>
-              <label htmlFor="title">{/* Title: */}</label>
+            <label htmlFor="title">
               <input
                 name="title"
                 value={title}
                 placeholder="Titel deiner Persönlichkeit"
                 onChange={(e) => setTitle(e.target.value)}
               ></input>
-            </p>
+            </label>
+
             <label htmlFor="personalityVersion">
               <textarea
                 id="personalityVersion"
@@ -122,19 +142,12 @@ function FutureSelf() {
             <MainButton
               text="Aktivate todays Personality"
               variant={"primary"}
-              type="submit"
               onClick={addPersonalityText}
             />
-            {/* <button type="submit" onClick={addPersonalityText}>
-              Aktivate todays Personality
-            </button> */}
           </form>
 
           <div className="personality-list">
             <h2>Deine bisherigen Versionen</h2>
-            {/* {personalityTextArray.map((personalityText, index) => (
-              <p key={index}>{personalityText}</p>
-            ))} */}
             {personalityTextArray.map((personality, index) => (
               <div className="personality-card" key={personality.id}>
                 <div className="personality-card-header">
@@ -147,18 +160,18 @@ function FutureSelf() {
                 </div>
 
                 <p>{personality.personalityText}</p>
-                {/* <p>{personality.createdAt}</p> */}
-                {/* <p>{new Date(personality.createdAt).toLocaleString("de-DE")}</p> -> WITH TIME */}
 
-                {/* <button type="reset" onClick={deletePersonalty}>
-                  Change Personality
-                </button> */}
                 <MainButton
                   text="Delete"
                   variant={"secondary"}
                   // type="button"
-                  // onClick={deletePersonalty}
-                  onClick={() => deletePersonalty(index)}
+                  onClick={() => deletePersonality(index)}
+                />
+
+                <MainButton
+                  text="Choose Personality"
+                  variant={"secondary"}
+                  onClick={() => setChosenPersonality(personality)}
                 />
               </div>
             ))}
