@@ -1,52 +1,65 @@
-.main-button {
-  background-color: transparent;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  border: 1px solid #5d5a5d;
-}
-
-.main-button:hover {
-  background-color: rgba(6, 161, 50, 0.5);
-}
-
-.main-button--primary {
-  background-color: #00eaff;
-  color: black;
-}
-
-.main-button--secondary {
-  background-color: #3c3c3d;
-  color: white;
-
-  &:hover {
+.button-container {
+  .main-button {
+    background-color: transparent;
     color: black;
-  }
-}
-
-.main-button--active {
-  background-image: linear-gradient(to right, #4cb8c4 0%, #3cd3ad 100%);
-}
-
-.main-button--navbar {
-  background-color: white;
-  color: black;
-  border: none;
-
-  &:hover {
-    color: black;
-    background-color: #f0f0f0;
+    /* border: none; */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #5d5a5d;
   }
 
-  &:active,
-  &.active {
-    background: #ffdbef;
-    background: linear-gradient(
-      357deg,
-      rgba(255, 219, 239, 1) 1%,
-      rgba(181, 216, 255, 1) 100%
-    );
+  .main-button:hover {
+    background-color: rgba(6, 161, 50, 0.5);
+  }
+
+  .main-button--primary {
+    /* background-color: #00eaff; */
+    color: black;
+  }
+
+  .main-button--secondary {
+    /* background-color: #3c3c3d;
+  color: white; */
+    padding: 5px 10px;
+    margin-top: 10px;
+
+    &:hover {
+      color: black;
+      background-color: rgb(245, 224, 250);
+    }
+  }
+
+  .main-button--active {
+    background-image: linear-gradient(to right, #4cb8c4 0%, #3cd3ad 100%);
+  }
+
+  .main-button--navbar {
+    background-color: white;
+    color: black;
+    border: none;
+
+    &:hover {
+      color: black;
+      background-color: #f0f0f0;
+    }
+
+    &:active,
+    &.active {
+      background: #ffdbef;
+      background: linear-gradient(
+        357deg,
+        rgba(255, 219, 239, 1) 1%,
+        rgba(181, 216, 255, 1) 100%
+      );
+    }
+  }
+
+  .main-button--close {
+    border: none;
+    font-size: 1rem;
+    /* position: relative; */
+    padding: 3px;
+    margin: 5px;
   }
 }
