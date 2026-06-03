@@ -2,16 +2,15 @@ import { useState } from "react";
 import "./FutureSelf.css";
 import AnimatedButton from "../../components/AnimatedButton/AnimatedButton";
 import MainButton from "../../components/Button/Button";
-
-interface Personality {
-  id: number;
-  title: string;
-  personalityText: string;
-  createdAt: string;
-  // mood: string;
-}
+import PersonalityModal from "../../components/PersonalityModal/PersonalityModal";
+import type { Personality } from "../../types/customTypes";
 
 function FutureSelf() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const [editingPersonality, setEditingPersonality] =
+    useState<Personality | null>(null);
+
   const [selectedPersonality, setSelectedPersonality] =
     useState<Personality | null>(null);
 
@@ -19,7 +18,7 @@ function FutureSelf() {
     Personality[]
   >(() => {
     const savedPersonality = localStorage.getItem("personalityText");
-    console.log("savedPersonality", savedPersonality);
+    // console.log("savedPersonality", savedPersonality);
 
     return savedPersonality ? JSON.parse(savedPersonality) : [];
   });
@@ -101,6 +100,20 @@ function FutureSelf() {
       personalityTextArray[personalityTextArray.length - 1];
   }
 
+  const handleSave = (updatedPersonality: Personality) => {
+    const updated = personalityTextArray.map((p) =>
+      p.id === updatedPersonality.id ? updatedPersonality : p,
+    );
+    setPersonalityTextArray(updated);
+    localStorage.setItem("personalityText", JSON.stringify(updated));
+
+    if (selectedPersonality?.id === updatedPersonality.id) {
+      setSelectedPersonality(updatedPersonality);
+    }
+
+    setOpenModal(false);
+  };
+
   return (
     <>
       <div className="future-self-container">
@@ -166,6 +179,24 @@ function FutureSelf() {
                   variant={"secondary"}
                   // type="button"
                   onClick={() => deletePersonality(index)}
+                />
+
+                <MainButton
+                  text="Edit"
+                  variant={"secondary"}
+                  onClick={() => {
+                    setEditingPersonality(personality);
+                    setOpenModal(true);
+                  }}
+
+                  // onClick={() => editPersonality(index)}
+                />
+
+                <PersonalityModal
+                  open={openModal}
+                  onClose={() => setOpenModal(false)}
+                  personality={editingPersonality}
+                  onSave={handleSave}
                 />
 
                 <MainButton
