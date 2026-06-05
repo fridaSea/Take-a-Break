@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./FutureSelf.css";
 import AnimatedButton from "../../components/AnimatedButton/AnimatedButton";
 import MainButton from "../../components/Button/Button";
@@ -14,11 +14,13 @@ function FutureSelf() {
   const [selectedPersonality, setSelectedPersonality] =
     useState<Personality | null>(null);
 
+  const [displayPersonality, setDisplayPersonality] =
+    useState<Personality | null>(null);
+
   const [personalityTextArray, setPersonalityTextArray] = useState<
     Personality[]
   >(() => {
     const savedPersonality = localStorage.getItem("personalityText");
-    // console.log("savedPersonality", savedPersonality);
 
     return savedPersonality ? JSON.parse(savedPersonality) : [];
   });
@@ -46,13 +48,24 @@ function FutureSelf() {
     }
   };
 
-  const deletePersonality = (index: number) => {
+  const deletePersonality = (id: number) => {
     // TODO: Add case, if personality is displayed and then deleted -> what happens then.
-    const updated = personalityTextArray.filter((_, i) => i !== index);
 
-    setPersonalityTextArray(updated);
+    const deleted = personalityTextArray.filter((_, i) => i !== id);
+    console.log("deleted", deleted);
 
-    localStorage.setItem("personalityText", JSON.stringify(updated));
+    const deletedPersonality = personalityTextArray[id];
+    console.log("deletedPersonality", deletedPersonality);
+
+    setPersonalityTextArray(deleted);
+
+    localStorage.setItem("personalityText", JSON.stringify(deleted));
+
+    if (deletedPersonality.id === selectedPersonality?.id) {
+      localStorage.removeItem("chosenPersonality");
+    }
+
+    updateDisplayedPersonality();
   };
 
   const setChosenPersonality = (personality: Personality) => {
@@ -88,16 +101,20 @@ function FutureSelf() {
   //   personalityTextArray[personalityTextArray.length - 1];
   // ?? -> gibt Fallback Wert. Dient dazu, einen Standardwert zuzuweisen, wenn eine Variable null oder undefined ist.
 
-  let displayedPersonality;
-  if (personalityTextArray.length === 0) {
-    displayedPersonality = null;
-  } else if (selectedPersonality) {
-    displayedPersonality = selectedPersonality;
-  } else if (localStoragePersonality) {
-    displayedPersonality = localStoragePersonality;
-  } else {
-    displayedPersonality =
-      personalityTextArray[personalityTextArray.length - 1];
+  function updateDisplayedPersonality() {
+    let displayedPersonality: Personality | null;
+    if (personalityTextArray.length === 0) {
+      displayedPersonality = null;
+    } else if (selectedPersonality) {
+      displayedPersonality = selectedPersonality;
+    } else if (localStoragePersonality) {
+      displayedPersonality = localStoragePersonality;
+    } else {
+      displayedPersonality =
+        personalityTextArray[personalityTextArray.length - 1];
+    }
+
+    setDisplayPersonality(displayedPersonality);
   }
 
   const handleSave = (updatedPersonality: Personality) => {
@@ -114,14 +131,18 @@ function FutureSelf() {
     setOpenModal(false);
   };
 
+  useEffect(() => {
+    updateDisplayedPersonality();
+  });
+
   return (
     <>
       <div className="future-self-container">
         <h2>Step into your future self</h2>
         <div className="personality-card-single">
           <div className="personality-card-single-border">
-            {displayedPersonality !== null
-              ? displayedPersonality.personalityText
+            {displayPersonality !== null
+              ? displayPersonality.personalityText
               : defaultText}
           </div>
         </div>
