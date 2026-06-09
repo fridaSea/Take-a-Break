@@ -7,6 +7,7 @@ import type { Personality } from "../../types/customTypes";
 
 function FutureSelf() {
   const [openModal, setOpenModal] = useState(false);
+  const [showChosenButton, setshowChosenButton] = useState(false);
 
   const [editingPersonality, setEditingPersonality] =
     useState<Personality | null>(null);
@@ -42,6 +43,7 @@ function FutureSelf() {
       setPersonalityTextArray(update);
       localStorage.setItem("personalityText", JSON.stringify(update));
       setSelectedPersonality(newPersonality);
+      updateDisplayedPersonality();
 
       setInputValue("");
       setTitle("");
@@ -50,7 +52,6 @@ function FutureSelf() {
 
   const deletePersonality = (id: number) => {
     // TODO: Add case, if personality is displayed and then deleted -> what happens then.
-
     const deleted = personalityTextArray.filter((_, i) => i !== id);
     console.log("deleted", deleted);
 
@@ -86,6 +87,14 @@ function FutureSelf() {
     return null;
   };
 
+  const handleChosenButton = () => {
+    if (displayPersonality === localStoragePersonality) {
+      setshowChosenButton(true);
+    } else {
+      setshowChosenButton(false);
+    }
+  };
+
   const defaultText = `Ich gehe mit Leichtigkeit durch meinen Tag und wähle Freude.
 
               Ich lebe im Hier und Jetzt.
@@ -115,6 +124,7 @@ function FutureSelf() {
     }
 
     setDisplayPersonality(displayedPersonality);
+    handleChosenButton();
   }
 
   const handleSave = (updatedPersonality: Personality) => {
@@ -144,6 +154,13 @@ function FutureSelf() {
             {displayPersonality !== null
               ? displayPersonality.personalityText
               : defaultText}
+            {showChosenButton ? (
+              <MainButton
+                text="Deaktivate choosen Personality"
+                variant={"primary"}
+                onClick={() => setshowChosenButton(!showChosenButton)}
+              />
+            ) : null}
           </div>
         </div>
 
