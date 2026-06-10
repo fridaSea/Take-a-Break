@@ -80,7 +80,7 @@ function FutureSelf() {
 
     if (chosenPersonalityId) {
       const selectedPersonality = personalityTextArray.find(
-        (personality) => personality.id === parseInt(chosenPersonalityId, 10),
+        (personality) => personality.id === parseInt(chosenPersonalityId, 10)
       );
       return selectedPersonality;
     }
@@ -129,7 +129,7 @@ function FutureSelf() {
 
   const handleSave = (updatedPersonality: Personality) => {
     const updated = personalityTextArray.map((p) =>
-      p.id === updatedPersonality.id ? updatedPersonality : p,
+      p.id === updatedPersonality.id ? updatedPersonality : p
     );
     setPersonalityTextArray(updated);
     localStorage.setItem("personalityText", JSON.stringify(updated));
@@ -196,57 +196,62 @@ function FutureSelf() {
               onClick={addPersonalityText}
             />
           </form>
-
-          <div className="personality-list">
-            <h2>Deine bisherigen Versionen</h2>
-            {personalityTextArray.map((personality, index) => (
-              <div className="personality-card" key={personality.id}>
-                <div className="personality-card-header">
-                  <h3>{personality.title}</h3>
-                  <p>
-                    {new Date(personality.createdAt).toLocaleDateString(
-                      "de-DE",
-                    )}
-                  </p>
-                </div>
-
-                <p>{personality.personalityText}</p>
-
-                <MainButton
-                  text="Delete"
-                  variant={"secondary"}
-                  // type="button"
-                  onClick={() => deletePersonality(index)}
-                />
-
-                <MainButton
-                  text="Edit"
-                  variant={"secondary"}
-                  onClick={() => {
-                    setEditingPersonality(personality);
-                    setOpenModal(true);
-                  }}
-
-                  // onClick={() => editPersonality(index)}
-                />
-
-                <PersonalityModal
-                  open={openModal}
-                  onClose={() => setOpenModal(false)}
-                  personality={editingPersonality}
-                  onSave={handleSave}
-                />
-
-                <MainButton
-                  text="Choose Personality"
-                  variant={"secondary"}
-                  onClick={() => setChosenPersonality(personality)}
-                />
-              </div>
-            ))}
-          </div>
         </div>
 
+        <div className="personality">
+          {personalityTextArray !== null && personalityTextArray.length > 0 ? (
+            <div className="personality-list">
+              <h2>Deine bisher gespeicherten Versionen</h2>
+              {personalityTextArray.map((personality, index) => (
+                <div className="personality-card" key={personality.id}>
+                  <div className="personality-card-header">
+                    <h3>{personality.title}</h3>
+                    <p>
+                      {new Date(personality.createdAt).toLocaleDateString(
+                        "de-DE"
+                      )}
+                    </p>
+                  </div>
+
+                  <p>{personality.personalityText}</p>
+
+                  <MainButton
+                    text="Delete"
+                    variant={"secondary"}
+                    // type="button"
+                    onClick={() => deletePersonality(index)}
+                  />
+
+                  <MainButton
+                    text="Edit"
+                    variant={"secondary"}
+                    onClick={() => {
+                      setEditingPersonality(personality);
+                      setOpenModal(true);
+                    }}
+
+                    // onClick={() => editPersonality(index)}
+                  />
+
+                  <PersonalityModal
+                    open={openModal}
+                    onClose={() => setOpenModal(false)}
+                    personality={editingPersonality}
+                    onSave={handleSave}
+                  />
+
+                  <MainButton
+                    text="Choose Personality"
+                    variant={"secondary"}
+                    onClick={() => setChosenPersonality(personality)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Du hast bisher noch keine Personalitys gespeichert.</p>
+          )}
+        </div>
         <AnimatedButton text="click" onClick={() => {}}></AnimatedButton>
       </div>
     </>
