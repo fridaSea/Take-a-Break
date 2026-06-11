@@ -43,6 +43,11 @@ function FutureSelf() {
       setPersonalityTextArray(update);
       localStorage.setItem("personalityText", JSON.stringify(update));
       setSelectedPersonality(newPersonality);
+
+      if (localStoragePersonality) {
+        localStorage.removeItem("chosenPersonality");
+      }
+
       updateDisplayedPersonality();
 
       setInputValue("");
@@ -203,7 +208,15 @@ function FutureSelf() {
             <div className="personality-list">
               <h2>Deine bisher gespeicherten Versionen</h2>
               {personalityTextArray.map((personality, index) => (
-                <div className="personality-card" key={personality.id}>
+                <div
+                  key={personality.id}
+                  className={`personality-card ${
+                    localStoragePersonality !== null &&
+                    personality.id === localStoragePersonality.id
+                      ? "personality-card-active"
+                      : ""
+                  }`}
+                >
                   <div className="personality-card-header">
                     <h3>{personality.title}</h3>
                     <p>
@@ -240,11 +253,14 @@ function FutureSelf() {
                     onSave={handleSave}
                   />
 
-                  <MainButton
-                    text="Choose Personality"
-                    variant={"secondary"}
-                    onClick={() => setChosenPersonality(personality)}
-                  />
+                  {localStoragePersonality !== null &&
+                  personality.id === localStoragePersonality.id ? null : (
+                    <MainButton
+                      text="Choose Personality"
+                      variant={"secondary"}
+                      onClick={() => setChosenPersonality(personality)}
+                    />
+                  )}
                 </div>
               ))}
             </div>

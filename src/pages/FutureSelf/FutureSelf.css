@@ -85,6 +85,10 @@
     }
   }
 
+  .personality-card-active {
+    border: 3px solid #6241a7;
+  }
+
   .personality-card-single {
     font-weight: bold;
     background-color: rgb(255, 255, 255);
