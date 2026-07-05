@@ -1,16 +1,17 @@
 .footer-container {
   background-color: rgb(255, 255, 255);
-  padding-top: 10px;
+  padding-top: 5px;
   padding-bottom: 10px;
-  margin-bottom: 10px;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
 
   ul {
     list-style: none;
   }
-
-  /* .footer-container {
-    margin-top: 15px;
-  } */
 
   .socialicon {
     color: black;
@@ -33,22 +34,19 @@
   }
 
   .socialIcons {
-    /* height: 2px; */
-    /* text-align: center; */
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+
     gap: 10px;
     padding: 0.5rem;
   }
 
   .contact-link {
     font-family: var(--space-mono-regular);
-    /* height: 2px; */
-    /* text-align: center; */
+
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+
     gap: 8px;
     padding: 0.5rem;
   }
