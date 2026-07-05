@@ -84,13 +84,15 @@ function FutureSelf() {
   const getChosenPersonality = (): Personality | null => {
     const chosenPersonalityId = localStorage.getItem("chosenPersonality");
 
-    if (chosenPersonalityId) {
-      const selectedPersonality = personalityTextArray.find(
-        (personality) => personality.id === parseInt(chosenPersonalityId, 10)
-      );
-      return selectedPersonality;
+    if (!chosenPersonalityId) {
+      return null;
     }
-    return null;
+
+    const selectedPersonality = personalityTextArray.find(
+      (personality) => personality.id === parseInt(chosenPersonalityId, 10)
+    );
+
+    return selectedPersonality ?? null;
   };
 
   const handleChosenButton = () => {
