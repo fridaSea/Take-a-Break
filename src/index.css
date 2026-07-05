@@ -63,6 +63,8 @@
 } */
 
 #root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   --bg: #00fbff;
   --text: #3c3c3d;
