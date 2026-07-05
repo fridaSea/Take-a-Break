@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./Home.css";
 import MainButton from "../../components/Button/Button";
-import HabitCheckbox from "../../components/HabitCheckbox/HabitCheckbox";
 
 function Home() {
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);

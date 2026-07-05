@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./FutureSelf.css";
-import AnimatedButton from "../../components/AnimatedButton/AnimatedButton";
 import MainButton from "../../components/Button/Button";
 import PersonalityModal from "../../components/PersonalityModal/PersonalityModal";
 import type { Personality } from "../../types/customTypes";
@@ -29,7 +28,9 @@ function FutureSelf() {
   const [inputValue, setInputValue] = useState("");
   const [title, setTitle] = useState("");
 
-  const addPersonalityText = (event) => {
+  const addPersonalityText = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
 
     if (inputValue.trim() !== "" && title.trim() !== "") {
