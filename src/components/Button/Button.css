@@ -2,7 +2,6 @@
   .main-button {
     background-color: transparent;
     color: black;
-    /* border: none; */
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -10,17 +9,14 @@
   }
 
   .main-button:hover {
-    background-color: rgba(6, 161, 50, 0.5);
+    background-color: #f0f0f0;
   }
 
   .main-button--primary {
-    /* background-color: #00eaff; */
     color: black;
   }
 
   .main-button--secondary {
-    /* background-color: #3c3c3d;
-  color: white; */
     padding: 5px 10px;
     margin-top: 10px;
 
