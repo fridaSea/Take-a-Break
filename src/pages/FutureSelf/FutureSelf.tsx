@@ -81,7 +81,7 @@ function FutureSelf() {
     setSelectedPersonality(personality);
   };
 
-  const getChosenPersonality = () => {
+  const getChosenPersonality = (): Personality | null => {
     const chosenPersonalityId = localStorage.getItem("chosenPersonality");
 
     if (chosenPersonalityId) {
