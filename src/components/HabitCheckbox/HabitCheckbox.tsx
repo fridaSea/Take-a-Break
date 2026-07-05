@@ -1,10 +1,12 @@
-// import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import "./HabitCheckbox.css";
 
-interface HabitCheckboxProps {
-  habitName: string;
-}
-function HabitCheckbox({ habitName }: HabitCheckboxProps) {
+// interface HabitCheckboxProps {
+//   habitName: string;
+// }
+
+function HabitCheckbox() {
+// { habitName }: HabitCheckboxProps
   // const [checkbox, setCheckbox] = useState<boolean>(false);
 
   // const [habitArray, setHabitArray] = useState(() => {
