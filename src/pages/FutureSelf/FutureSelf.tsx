@@ -161,7 +161,7 @@ function FutureSelf() {
               : defaultText}
             {showChosenButton ? (
               <MainButton
-                text="Deaktivate choosen Personality"
+                text="Deactivate choosen personality"
                 variant={"primary"}
                 onClick={() => setshowChosenButton(!showChosenButton)}
               />
@@ -171,14 +171,12 @@ function FutureSelf() {
 
         <div className="personality">
           <form className="personality-form">
-            <h3>
-              In welcher Version möchtest du heute durch deinen Tag gehen?
-            </h3>
+            <h3>Which version of yourself do you want to embody today?</h3>
             <label htmlFor="title">
               <input
                 name="title"
                 value={title}
-                placeholder="Titel deiner Persönlichkeit"
+                placeholder="Title of your personality"
                 onChange={(e) => setTitle(e.target.value)}
               ></input>
             </label>
@@ -191,12 +189,12 @@ function FutureSelf() {
                 onChange={(e) => setInputValue(e.target.value)}
                 rows={5}
                 cols={50}
-                placeholder="Heute gehe ich mit Leichtigkeit durch meinen Tag ..."
+                placeholder="Today I choose ease ..."
               ></textarea>
             </label>
 
             <MainButton
-              text="Aktivate todays Personality"
+              text="Unlock todays personality"
               variant={"primary"}
               onClick={addPersonalityText}
             />
@@ -206,7 +204,7 @@ function FutureSelf() {
         <div className="personality">
           {personalityTextArray !== null && personalityTextArray.length > 0 ? (
             <div className="personality-list">
-              <h2>Deine bisher gespeicherten Versionen</h2>
+              <h2>Your previously saved versions</h2>
               {personalityTextArray.map((personality, index) => (
                 <div
                   key={personality.id}
@@ -265,10 +263,9 @@ function FutureSelf() {
               ))}
             </div>
           ) : (
-            <p>Du hast bisher noch keine Personalitys gespeichert.</p>
+            <p>You haven`t saved any personalites yet.</p>
           )}
         </div>
-        <AnimatedButton text="click" onClick={() => {}}></AnimatedButton>
       </div>
     </>
   );
