@@ -5,51 +5,36 @@ import Navbar from "./components/Navbar/Navbar";
 import FutureSelf from "./pages/FutureSelf/FutureSelf";
 import Footer from "./components/Footer/Footer";
 import Contact from "./pages/Contact/Contact";
+import SkipLink from "./components/SkipLink/SkipLink";
 
 const Root = () => {
   return (
     <>
+      <SkipLink />
       <Navbar />
-      <Outlet />
-      <Footer />
+      <main id="center" tabIndex={-1}>
+        <Outlet />
+      </main>
+      <footer id="footer-content" tabIndex={-1}>
+        <Footer />
+      </footer>
     </>
   );
 };
 
 function App() {
-  // console.log("Production or Dev mode?? :>> ", import.meta.env.MODE);
   return (
     <>
-      {/* <AuthContextProvider>
-        <MenuProvider> */}
       <BrowserRouter>
         <Routes>
-          {/* //REVIEW the two routes for Home component are redundant */}
           <Route element={<Root />}>
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/futureSelf" element={<FutureSelf />} />
             <Route path="/contact" element={<Contact />} />
-            {/* <Route path="/registration" element={<Registration />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/sunsets" element={<Sunsets />} />
-                <Route path="/sunsets/add" element={<AddSunset />} />
-                <Route path="/sunsets/:id/update" element={<UpdateSunset />} />
-                <Route path="/sunsets/:id" element={<DetailSunset />} />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="*" element={<ErrorPage />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>
-      {/* </MenuProvider>
-      </AuthContextProvider> */}
     </>
   );
 }
