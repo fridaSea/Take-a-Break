@@ -1,0 +1,41 @@
+.skip-links {
+  position: relative;
+  z-index: 1000;
+
+  .skip-to-anchor-link {
+    position: absolute;
+    left: -999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 1000;
+    background: linear-gradient(
+      357deg,
+      rgba(255, 219, 239, 1) 1%,
+      rgba(181, 216, 255, 1) 100%
+    );
+    color: #000;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 5px;
+  }
+
+  .skip-to-anchor-link:focus {
+    position: fixed;
+    left: 16px;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+    margin-top: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skip-link:focus {
+      scroll-behavior: auto;
+    }
+  }
+}
